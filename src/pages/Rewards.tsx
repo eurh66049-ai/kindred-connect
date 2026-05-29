@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Flame, Coins, Trophy, Sparkles, Gift, ShoppingBag, Crown, Lock, Check } from 'lucide-react';
+import { Flame, Coins, Trophy, Sparkles, Gift, ShoppingBag } from 'lucide-react';
 import { useGamificationState, useClaimDailyLogin, useCompleteDailyTask } from '@/hooks/useGamification';
 import { levelProgress, type DailyTaskCode } from '@/services/gamification';
 import { useAuth } from '@/context/AuthContext';
