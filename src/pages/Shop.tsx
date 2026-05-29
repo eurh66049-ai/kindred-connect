@@ -13,7 +13,6 @@ import type { ShopCategory } from '@/services/gamification';
 import { useAuth } from '@/context/AuthContext';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
@@ -49,8 +48,8 @@ const Shop: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center" dir="rtl">
-        <h1 className="text-2xl font-bold mb-4">سجّل الدخول لزيارة المتجر</h1>
+      <div className="container mx-auto px-4 py-16 text-center font-sans" dir="rtl">
+        <h1 className="text-2xl font-bold mb-4 text-foreground">سجّل الدخول لزيارة المتجر</h1>
         <Link to="/auth"><Button>تسجيل الدخول</Button></Link>
       </div>
     );
@@ -66,42 +65,42 @@ const Shop: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-32 md:pb-10" dir="rtl">
+    <div className="min-h-screen bg-background pb-32 md:pb-10 font-sans" dir="rtl">
       <Helmet><title>المتجر — كتبي</title></Helmet>
 
       <div className="container mx-auto px-4 pt-6 max-w-6xl">
-        {/* Clean header */}
+        {/* Header */}
         <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
               المتجر
             </h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               خصّص ملفك الشخصي بعناصر تجميلية
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4 py-2 shadow-sm">
-            <Coins className="w-4 h-4 text-blue-500" />
-            <span className="font-bold text-slate-900 dark:text-slate-100" dir="ltr">
+          <div className="flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2 shadow-sm">
+            <Coins className="w-4 h-4 text-primary" />
+            <span className="font-bold text-foreground" dir="ltr">
               {userCoins.toLocaleString('en')}
             </span>
-            <span className="text-xs text-slate-500">عملة</span>
+            <span className="text-xs text-muted-foreground">عملة</span>
           </div>
         </div>
 
         {/* Search */}
         <div className="relative mb-5">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="ابحث في المتجر…"
-            className="pr-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-full h-11"
+            className="pr-10 bg-card border-border rounded-full h-11 font-sans"
           />
         </div>
 
-        {/* Category tabs - clean horizontal scroll */}
+        {/* Category tabs */}
         <div className="flex gap-2 overflow-x-auto pb-3 mb-6 -mx-4 px-4 scrollbar-hide">
           {categories.map((cat) => {
             const meta = CATEGORY_META[cat];
@@ -112,8 +111,8 @@ const Shop: React.FC = () => {
                 onClick={() => setActiveCat(cat)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium transition-all border ${
                   active
-                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white'
-                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card text-muted-foreground border-border hover:border-primary/40 hover:text-foreground'
                 }`}
               >
                 {meta.icon}
@@ -138,19 +137,19 @@ const Shop: React.FC = () => {
             return (
               <Card
                 key={item.id}
-                className={`group relative overflow-hidden flex flex-col bg-white dark:bg-slate-900 border transition-all hover:shadow-md ${
+                className={`group relative overflow-hidden flex flex-col bg-card border transition-all hover:shadow-md ${
                   selected
-                    ? 'border-blue-500 ring-1 ring-blue-500'
-                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                    ? 'border-primary ring-1 ring-primary'
+                    : 'border-border hover:border-primary/40'
                 }`}
               >
                 {selected && (
-                  <div className="absolute top-2 right-2 z-10 bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <div className="absolute top-2 right-2 z-10 bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
                     <Check className="w-3 h-3" /> مُطبّق
                   </div>
                 )}
                 {owned && !selected && (
-                  <div className="absolute top-2 right-2 z-10 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <div className="absolute top-2 right-2 z-10 bg-muted text-muted-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
                     مملوك
                   </div>
                 )}
@@ -158,13 +157,13 @@ const Shop: React.FC = () => {
                 <PreviewBlock item={item} />
 
                 <div className="p-3 flex flex-col flex-1 gap-2">
-                  <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100 line-clamp-1">
+                  <h3 className="font-semibold text-sm text-foreground line-clamp-1">
                     {item.title_ar}
                   </h3>
 
                   <div className="mt-auto flex items-center justify-between gap-2">
-                    <span className="flex items-center gap-1 text-sm font-bold text-slate-700 dark:text-slate-200" dir="ltr">
-                      <Coins className="w-3.5 h-3.5 text-blue-500" />
+                    <span className="flex items-center gap-1 text-sm font-bold text-foreground" dir="ltr">
+                      <Coins className="w-3.5 h-3.5 text-primary" />
                       {item.price_coins.toLocaleString('en')}
                     </span>
 
@@ -173,7 +172,7 @@ const Shop: React.FC = () => {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="h-8 text-xs text-slate-500 hover:text-slate-900"
+                          className="h-8 text-xs text-muted-foreground hover:text-foreground"
                           onClick={() => clearCosmetic.mutate(item.category)}
                         >
                           إزالة
@@ -181,7 +180,7 @@ const Shop: React.FC = () => {
                       ) : (
                         <Button
                           size="sm"
-                          className="h-8 text-xs bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+                          className="h-8 text-xs"
                           onClick={() => selectCosmetic.mutate(item.id)}
                         >
                           تطبيق
@@ -192,11 +191,7 @@ const Shop: React.FC = () => {
                         size="sm"
                         disabled={purchase.isPending || !canAfford}
                         onClick={() => purchase.mutate(item.id)}
-                        className={`h-8 text-xs ${
-                          canAfford
-                            ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                            : ''
-                        }`}
+                        className="h-8 text-xs"
                         variant={canAfford ? 'default' : 'outline'}
                       >
                         {canAfford ? 'شراء' : <><Lock className="w-3 h-3 ml-1" /> ناقص</>}
@@ -210,7 +205,7 @@ const Shop: React.FC = () => {
         </div>
 
         {currentItems.length === 0 && (
-          <div className="text-center py-20 text-slate-400">
+          <div className="text-center py-20 text-muted-foreground">
             لا توجد عناصر مطابقة
           </div>
         )}
@@ -222,7 +217,7 @@ const Shop: React.FC = () => {
 const PreviewBlock: React.FC<{ item: { category: ShopCategory; preview_value: string | null; title_ar: string } }> = ({ item }) => {
   if (item.category === 'name_color') {
     return (
-      <div className="h-28 bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 flex items-center justify-center">
+      <div className="h-28 bg-muted/40 border-b border-border flex items-center justify-center">
         <span className="text-3xl font-extrabold" style={{ color: item.preview_value ?? undefined }}>
           كتبي
         </span>
@@ -236,30 +231,30 @@ const PreviewBlock: React.FC<{ item: { category: ShopCategory; preview_value: st
       fire: 'ring-4 ring-orange-500 ring-offset-2 ring-offset-background shadow-[0_0_20px_rgba(249,115,22,0.8)]',
     };
     return (
-      <div className="h-28 bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 flex items-center justify-center">
-        <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-700 ${frameClass[item.preview_value ?? ''] ?? 'ring-2 ring-border'}`} />
+      <div className="h-28 bg-muted/40 border-b border-border flex items-center justify-center">
+        <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-muted to-accent ${frameClass[item.preview_value ?? ''] ?? 'ring-2 ring-border'}`} />
       </div>
     );
   }
   if (item.category === 'badge') {
     return (
-      <div className="h-28 bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 flex items-center justify-center text-5xl">
+      <div className="h-28 bg-muted/40 border-b border-border flex items-center justify-center text-5xl">
         {item.preview_value}
       </div>
     );
   }
   if (item.category === 'comment_highlight') {
     return (
-      <div className="h-28 flex items-center justify-center p-3 border-b border-slate-100 dark:border-slate-800" style={{ background: item.preview_value ?? 'linear-gradient(135deg,#fde68a,#fca5a5)' }}>
-        <span className="text-xs bg-white/90 px-2 py-1 rounded-md font-medium text-slate-700">تعليق مميّز</span>
+      <div className="h-28 flex items-center justify-center p-3 border-b border-border" style={{ background: item.preview_value ?? 'linear-gradient(135deg,#fde68a,#fca5a5)' }}>
+        <span className="text-xs bg-background/90 px-2 py-1 rounded-md font-medium text-foreground">تعليق مميّز</span>
       </div>
     );
   }
   return (
     <div
-      className="h-28 border-b border-slate-100 dark:border-slate-800"
+      className="h-28 border-b border-border"
       style={{
-        background: item.preview_value ?? 'linear-gradient(135deg, #e0e7ff, #c7d2fe)',
+        background: item.preview_value ?? 'linear-gradient(135deg, hsl(var(--muted)), hsl(var(--accent)))',
       }}
     />
   );
