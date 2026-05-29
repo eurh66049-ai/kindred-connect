@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Flame, Coins, Trophy, Sparkles, Gift, ShoppingBag, Crown } from 'lucide-react';
+import { Flame, Coins, Trophy, Sparkles, Gift, ShoppingBag, Crown, Lock, Check } from 'lucide-react';
 import { useGamificationState, useClaimDailyLogin, useCompleteDailyTask } from '@/hooks/useGamification';
 import { levelProgress, type DailyTaskCode } from '@/services/gamification';
 import { useAuth } from '@/context/AuthContext';
@@ -123,6 +123,52 @@ const Rewards: React.FC = () => {
         </div>
       </Card>
 
+      {/* مزايا المستوى — ما تفتحه نقاط XP */}
+      <Card className="p-5 mb-6">
+        <h2 className="text-xl font-bold mb-1 flex items-center gap-2">
+          <Crown className="text-purple-500" /> مزايا المستوى
+        </h2>
+        <p className="text-xs text-muted-foreground mb-4">
+          كلما زادت نقاط XP، ارتفع مستواك وفتحت ميزات حصرية جديدة 🚀
+        </p>
+        <div className="space-y-2">
+          {LEVEL_PERKS.map((perk) => {
+            const unlocked = data.level.level >= perk.level;
+            return (
+              <div
+                key={perk.level}
+                className={`flex items-center gap-3 p-3 rounded-lg border ${
+                  unlocked
+                    ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800'
+                    : 'bg-muted/30 border-border'
+                }`}
+              >
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                    unlocked
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-muted text-muted-foreground'
+                  }`}
+                >
+                  {unlocked ? <Check className="w-5 h-5" /> : <Lock className="w-4 h-4" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-sm">
+                    {perk.icon} {perk.title}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-0.5">
+                    {perk.description}
+                  </div>
+                </div>
+                <Badge variant={unlocked ? 'default' : 'secondary'} className="shrink-0">
+                  مستوى {perk.level}
+                </Badge>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+
       {/* الشارات */}
       <Card className="p-5 mb-6">
         <h2 className="text-xl font-bold mb-4">🏅 شاراتي ({data.badges.length})</h2>
@@ -171,5 +217,15 @@ const Row: React.FC<{ label: string; value: string; highlight?: boolean }> = ({ 
     <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{value}</bdi>
   </div>
 );
+
+const LEVEL_PERKS: Array<{ level: number; icon: string; title: string; description: string }> = [
+  { level: 2, icon: '🎨', title: 'تخصيص لون الاسم', description: 'استخدم ألوان مميزة لاسمك في التعليقات والملف' },
+  { level: 5, icon: '⭐', title: 'إطارات الصورة الرمزية', description: 'افتح إطارات حصرية لصورتك الشخصية' },
+  { level: 8, icon: '💬', title: 'تمييز التعليقات', description: 'تعليقاتك ستظهر بخلفية مميزة في النقاشات' },
+  { level: 12, icon: '📚', title: 'رفع كتب للمكتبة', description: 'ساهم بإضافة كتب جديدة لمجتمع كتبي' },
+  { level: 15, icon: '🖼️', title: 'خلفيات الملف الشخصي', description: 'افتح خلفيات حصرية لتزيين ملفك' },
+  { level: 20, icon: '🏆', title: 'شارة قارئ نخبة', description: 'شارة ذهبية بجانب اسمك في كل مكان' },
+  { level: 30, icon: '👑', title: 'وصول مبكر للميزات الجديدة', description: 'جرّب الميزات قبل الجميع' },
+];
 
 export default Rewards;
