@@ -572,9 +572,18 @@ button, .clickable {
   padding-bottom: calc(108px + env(safe-area-inset-bottom)) !important;
 }
 
+/* مساحة تمرير حقيقية لصفحة المكافآت حتى لا يغطي شريط التنقل السفلي آخر المحتوى على الهاتف */
+.rewards-page {
+  padding-bottom: calc(240px + env(safe-area-inset-bottom)) !important;
+}
+
 @media (min-width: 768px) {
   .pb-safe-bottom {
     padding-bottom: 0 !important;
+  }
+
+  .rewards-page {
+    padding-bottom: 2.5rem !important;
   }
 }
 
