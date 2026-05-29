@@ -572,9 +572,14 @@ button, .clickable {
   padding-bottom: calc(108px + env(safe-area-inset-bottom)) !important;
 }
 
-/* مساحة تمرير حقيقية لصفحة المكافآت حتى لا يغطي شريط التنقل السفلي آخر المحتوى على الهاتف */
-.rewards-page {
-  padding-bottom: calc(240px + env(safe-area-inset-bottom)) !important;
+/* مساحة سفلية عامة لكل الصفحات حتى لا يغطي شريط الهاتف آخر المحتوى */
+.app-content-with-bottom-nav {
+  padding-bottom: calc(128px + env(safe-area-inset-bottom)) !important;
+}
+
+.mobile-bottom-navigation {
+  min-height: calc(78px + env(safe-area-inset-bottom));
+  padding: 0.375rem 0.375rem calc(0.375rem + env(safe-area-inset-bottom));
 }
 
 @media (min-width: 768px) {
@@ -582,8 +587,8 @@ button, .clickable {
     padding-bottom: 0 !important;
   }
 
-  .rewards-page {
-    padding-bottom: 2.5rem !important;
+  .app-content-with-bottom-nav {
+    padding-bottom: 0 !important;
   }
 }
 

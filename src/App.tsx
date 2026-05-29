@@ -83,6 +83,22 @@ function AppContent() {
   const location = useLocation();
   const isReaderPage = location.pathname.includes('/book/reading/');
 
+  useEffect(() => {
+    const syncBottomNavSpace = () => {
+      const nav = document.querySelector<HTMLElement>('[data-bottom-navigation="true"]');
+      const height = nav?.offsetHeight ?? 0;
+      document.documentElement.style.setProperty('--bottom-nav-safe-space', `${height + 56}px`);
+    };
+
+    syncBottomNavSpace();
+    window.addEventListener('resize', syncBottomNavSpace);
+    window.addEventListener('orientationchange', syncBottomNavSpace);
+    return () => {
+      window.removeEventListener('resize', syncBottomNavSpace);
+      window.removeEventListener('orientationchange', syncBottomNavSpace);
+    };
+  }, [location.pathname, isReaderPage]);
+
   // تتبع آخر نشاط المستخدم (Last seen) عبر Supabase
   useUserPresenceTracker();
 
@@ -96,51 +112,53 @@ function AppContent() {
       <Sonner />
       
     
-      <Suspense fallback={<PageFallback />}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/book/:id" element={<BookDetails />} />
-          <Route path="/book/reading/:id" element={<PDFReaderPage />} />
-          <Route path="/upload-book" element={<UploadBook />} />
-          <Route path="/admin/books" element={<AdminBooks />} />
-          <Route path="/admin/analytics" element={<AdminAnalytics />} />
-          <Route path="/admin/seo" element={<AdminSEO />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/my-books" element={<MyBooks />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/quotes" element={<Quotes />} />
-          <Route path="/site-updates" element={<SiteUpdates />} />
-          <Route path="/daily-messages" element={<SiteUpdates />} />
-          <Route path="/donation" element={<Donation />} />
-          <Route path="/donation-success" element={<DonationSuccess />} />
-          <Route path="/profile-customization" element={<ProfileCustomization />} />
-          <Route path="/categories" element={<BookCategories />} />
-          <Route path="/category/:category" element={<CategoryBooks />} />
-          <Route path="/authors" element={<Authors />} />
-          <Route path="/author/:authorIdentifier" element={<AuthorPage />} />
-          <Route path="/user/:userIdentifier" element={<PublicUserProfile />} />
-          <Route path="/suggestions" element={<Suggestions />} />
-          <Route path="/messages" element={<Messages />} />
-          <Route path="/reading-clubs" element={<ReadingClubs />} />
-          <Route path="/reading-clubs/:clubId" element={<ReadingClubRoom />} />
-          <Route path="/cover-designer" element={<CoverDesigner />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/rewards" element={<Rewards />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <main className={!isReaderPage ? 'app-content-with-bottom-nav' : undefined}>
+        <Suspense fallback={<PageFallback />}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/book/:id" element={<BookDetails />} />
+            <Route path="/book/reading/:id" element={<PDFReaderPage />} />
+            <Route path="/upload-book" element={<UploadBook />} />
+            <Route path="/admin/books" element={<AdminBooks />} />
+            <Route path="/admin/analytics" element={<AdminAnalytics />} />
+            <Route path="/admin/seo" element={<AdminSEO />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/my-books" element={<MyBooks />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/quotes" element={<Quotes />} />
+            <Route path="/site-updates" element={<SiteUpdates />} />
+            <Route path="/daily-messages" element={<SiteUpdates />} />
+            <Route path="/donation" element={<Donation />} />
+            <Route path="/donation-success" element={<DonationSuccess />} />
+            <Route path="/profile-customization" element={<ProfileCustomization />} />
+            <Route path="/categories" element={<BookCategories />} />
+            <Route path="/category/:category" element={<CategoryBooks />} />
+            <Route path="/authors" element={<Authors />} />
+            <Route path="/author/:authorIdentifier" element={<AuthorPage />} />
+            <Route path="/user/:userIdentifier" element={<PublicUserProfile />} />
+            <Route path="/suggestions" element={<Suggestions />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/reading-clubs" element={<ReadingClubs />} />
+            <Route path="/reading-clubs/:clubId" element={<ReadingClubRoom />} />
+            <Route path="/cover-designer" element={<CoverDesigner />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/rewards" element={<Rewards />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </main>
 
       {!isReaderPage && <BottomNavigation />}
       {!isReaderPage && <UnlimitedDownloadsPrompt />}
