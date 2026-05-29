@@ -42,7 +42,7 @@ const BottomNavigation: React.FC = () => {
   };
 
   return (
-    <div className="mobile-bottom-navigation fixed inset-x-0 bottom-0 z-[9999] flex justify-around items-center
+    <div data-bottom-navigation="true" className="mobile-bottom-navigation fixed inset-x-0 bottom-0 z-[9999] flex justify-around items-center
       bg-card/90 backdrop-blur-md border-t border-border rounded-t-2xl shadow-xl md:hidden">
       
       <NavButton label="الرئيسية" icon={<HomeIcon className="h-5 w-5" />} active={isActive('/')} onClick={() => handleNavigation('/')} />
