@@ -83,6 +83,22 @@ function AppContent() {
   const location = useLocation();
   const isReaderPage = location.pathname.includes('/book/reading/');
 
+  useEffect(() => {
+    const syncBottomNavSpace = () => {
+      const nav = document.querySelector<HTMLElement>('[data-bottom-navigation="true"]');
+      const height = nav?.offsetHeight ?? 0;
+      document.documentElement.style.setProperty('--bottom-nav-safe-space', `${height + 56}px`);
+    };
+
+    syncBottomNavSpace();
+    window.addEventListener('resize', syncBottomNavSpace);
+    window.addEventListener('orientationchange', syncBottomNavSpace);
+    return () => {
+      window.removeEventListener('resize', syncBottomNavSpace);
+      window.removeEventListener('orientationchange', syncBottomNavSpace);
+    };
+  }, [location.pathname, isReaderPage]);
+
   // تتبع آخر نشاط المستخدم (Last seen) عبر Supabase
   useUserPresenceTracker();
 
