@@ -19,7 +19,7 @@ const Rewards: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
+      <div className="rewards-page mx-auto w-full max-w-4xl px-4 pt-16 text-center min-h-screen" dir="rtl">
         <Helmet><title>مكافآتي — كتبي</title></Helmet>
         <h1 className="text-2xl font-bold mb-4">سجّل الدخول لرؤية مكافآتك</h1>
         <Link to="/auth"><Button>تسجيل الدخول</Button></Link>
@@ -28,14 +28,14 @@ const Rewards: React.FC = () => {
   }
 
   if (isLoading || !data) {
-    return <div className="flex justify-center py-16"><LoadingSpinner size="lg" /></div>;
+    return <div className="rewards-page flex justify-center pt-16 min-h-screen"><LoadingSpinner size="lg" /></div>;
   }
 
   const progress = levelProgress(data);
   const doneSet = new Set<DailyTaskCode>(data.daily_tasks_completed);
 
   return (
-    <div className="container mx-auto px-4 py-6 pb-64 md:pb-10 max-w-4xl" dir="rtl">
+    <div className="rewards-page mx-auto w-full max-w-4xl px-4 pt-6" dir="rtl">
       <Helmet>
         <title>مكافآتي — كتبي</title>
         <meta name="description" content="نقاطك ومستواك وسلسلة قراءتك ومتجر النقاط في كتبي" />
