@@ -42,8 +42,8 @@ const BottomNavigation: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[9999] flex justify-around items-center
-      bg-card/90 backdrop-blur-md border-t border-border rounded-t-2xl shadow-xl p-1.5 sm:p-2 md:hidden">
+    <div className="mobile-bottom-navigation fixed inset-x-0 bottom-0 z-[9999] flex justify-around items-center
+      bg-card/90 backdrop-blur-md border-t border-border rounded-t-2xl shadow-xl md:hidden">
       
       <NavButton label="الرئيسية" icon={<HomeIcon className="h-5 w-5" />} active={isActive('/')} onClick={() => handleNavigation('/')} />
       <NavButton label="انشر كتابك" icon={<UploadBookIcon className="h-5 w-5" />} active={isActive('/upload-book')} onClick={() => handleNavigation('/upload-book')} />
@@ -76,7 +76,7 @@ const NavButton = ({ label, icon, active, onClick }: any) => (
     onClick={onClick}
     aria-label={label}
     className={cn(
-      "flex flex-col items-center justify-center p-2 rounded-xl transition-colors transform active:scale-95 active:animate-pulse",
+      "flex flex-col items-center justify-center p-2 rounded-xl transition-colors transform active:scale-95 active:animate-pulse min-w-0 flex-1",
       active ? "text-primary" : "text-foreground hover:text-primary"
     )}
   >
