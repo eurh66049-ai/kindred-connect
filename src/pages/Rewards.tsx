@@ -218,4 +218,14 @@ const Row: React.FC<{ label: string; value: string; highlight?: boolean }> = ({ 
   </div>
 );
 
+const LEVEL_PERKS: Array<{ level: number; icon: string; title: string; description: string }> = [
+  { level: 2, icon: '🎨', title: 'تخصيص لون الاسم', description: 'استخدم ألوان مميزة لاسمك في التعليقات والملف' },
+  { level: 5, icon: '⭐', title: 'إطارات الصورة الرمزية', description: 'افتح إطارات حصرية لصورتك الشخصية' },
+  { level: 8, icon: '💬', title: 'تمييز التعليقات', description: 'تعليقاتك ستظهر بخلفية مميزة في النقاشات' },
+  { level: 12, icon: '📚', title: 'رفع كتب للمكتبة', description: 'ساهم بإضافة كتب جديدة لمجتمع كتبي' },
+  { level: 15, icon: '🖼️', title: 'خلفيات الملف الشخصي', description: 'افتح خلفيات حصرية لتزيين ملفك' },
+  { level: 20, icon: '🏆', title: 'شارة قارئ نخبة', description: 'شارة ذهبية بجانب اسمك في كل مكان' },
+  { level: 30, icon: '👑', title: 'وصول مبكر للميزات الجديدة', description: 'جرّب الميزات قبل الجميع' },
+];
+
 export default Rewards;
